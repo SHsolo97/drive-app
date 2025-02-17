@@ -1,6 +1,7 @@
 // Example model schema from the Drizzle docs
 // https://orm.drizzle.team/docs/sql-schema-declaration
 
+import { hash } from "crypto";
 import { sql } from "drizzle-orm";
 import {
   bigint,
@@ -19,10 +20,12 @@ import {
 export const createTable = mysqlTableCreator((name) => `drive-app_${name}`);
 
 export const posts = createTable(
-  "post",
+  "users",
   {
     id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
     name: varchar("name", { length: 256 }),
+    email: varchar("email", { length: 256 }),
+    hashedPassword: varchar("hashed_password", { length: 256 }),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
